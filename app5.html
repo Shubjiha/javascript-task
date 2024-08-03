@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+    <fieldset>
+        <legend>course</legend>
+        <div>
+            <lable for="course">selectAll</lable>
+            <input type="checkbox" name="sellectAll" onclick="checkAll()"/>
+        </div>
+        <div>
+            <lable for="course">angular</lable>
+            <input type="checkbox" name="angular"/>
+        </div>
+        <div>
+            <lable for="course">java</lable>
+            <input type="checkbox" name="java"/>
+        </div>
+        <div>
+            <lable for="course">react</lable>
+            <input type="checkbox" name="react"/>
+        </div>
+        </fieldset>
+        <script>
+            let checkbox=document.getElementsByName("course")
+            console.log(checkbox)
+            let checkAll=()=>{
+                let checkbox=document.getElementsByName("course");
+
+                if(checkbox[1].checked=="true" && checkbox[2].checked=="true"&&)
+            }
+        </script>
