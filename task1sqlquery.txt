@@ -1,0 +1,107 @@
+
+TASK1:
+
+//create table
+
+CREATE TABLE book(bookid int PRIMARY KEY AUTO_INCREMENT ,bookname varchar(99)UNIQUE ,booksubject varchar(99),price int,stock int) AUTO_INCREMENT=1111;
+
+//inserting element
+
+INSERT INTO book(bookid,bookname,authorname,booksubject,price,stock,soldout)VALUES('mahi','javaprogramming','joe','java'500,5,3);
+INSERT INTO book(bookid,bookname,authorname,booksubject,price,stock,soldout)VALUES('manis','cprogramming','shams','c',800,4,2);
+INSERT INTO book(bookid,bookname,authorname,booksubject,price,stock,soldout)VALUES('kavi','Javaprogramming','ratha','java',500,7,3);
+
+ //only disply book
+SELECT * FROM `book` WHERE booksubject='java';
+SELECT * FROM `book` WHERE booksubject='python';
+
+//count with name
+
+SELECT booksubject, COUNT(booksubject) from book WHERE booksubject='java';
+SELECT booksubject, COUNT(booksubject) from book WHERE booksubject='python';
+
+//count all book
+SELECT COUNT(*) FROM book;
+
+
+//max price book name
+SELECT bookname,booksubject from book WHERE price=(select MAX(price)from book);
+
+
+//start with w end with s
+SELECT * FROM `book` WHERE authorname LIKE 'w%' OR authorname LIKE '%s';
+
+
+// to 3 stock 
+SELECT * from book ORDER BY stock ASC LIMIT 3;
+
+
+// moorthan 2soltout
+ select *from book where soldout>2;
+
+
+// unique subectname
+ SELECT DISTINCT booksubject from book order by booksubject ASC;
+
+//most of sales and sum of the price
+  select max(soldout) ,SUM(price) from book;
+
+
+//foreign key typr  one -one
+ CREATE TABLE person1(personid int PRIMARY KEY,name varchar(80),email varchar(60),age int);
+ CREATE TABLE address(hoseno varchar(99),streetname varchar(99),city varchar(50),personid int UNIQUE,CONSTRAINT confik FOREIGN KEY(personid) REFERENCES person(personid));
+
+// inserting value
+
+ INSERT INTO address1 VALUES("69",'gandhi','vellore',1)//error because 1 value not created in parent trable
+
+//altenate code for not an error
+INSERT INTO address1 VALUES("69",'gandhi','vellore',1)//not throw erro because create id in person table
+INSERT INTO person1 VALUES(1,'mahi','velu@gmail.com',21)
+
+//adress geting based on parent table
+SELECT * FROM `address1` WHERE P_id=(SELECT personid from person1 where name='mahi');
+//inner join
+SELECT * FROM `person1`p INNER JOIN address1 a ON p.personid=a.P_id;
+//leftjoin
+SELECT * FROM `person1`p LEFT JOIN address1 a ON p.personid=a.P_id;
+//rightjoin
+SELECT * FROM `person1`p RIGHT JOIN address1 a ON p.personid=a.P_id;
+
+// third table
+CREATE TABLE course(courseid int,coursename varchar(99),fees int,CONSTRAINT fkey1 FOREIGN KEY(courseid)REFERENCES person1(personid));
+//value insert
+INSERT INTO course(courseid,coursename,fees)VALUES(5,'avascript',10000);
+
+//inner join three table
+select * from person1 p INNER JOIN address1 a ON p. personid=a.P_id INNER JOIN course c ON p.personid= c.courseid;
+
+//prson1-name,adderss1-city,course-coursename
+select p.name,a.city,c.coursename FROM person1 p INNER JOIN address1 a ON p. personid=a.P_id INNER JOIN course c ON a.P_id= c.courseid WHERE coursename='java';
+
+//create table all using 1-1 1-many
+CREATE TABLE patient(patientid int  PRIMARY KEY,patientname varchar(99),patientcontact int,resons varchar(89));
+CREATE TABLE medicalrecord(medition_id int PRIMARY KEY ,typeofmedition varchar(78),statusofhealthcondition varchar(78),patientid int UNIQUE,CONSTRAINT confic FOREIGN KEY(patientid) REFERENCES patient(patientid));
+CREATE TABLE doctor(doctor_id int PRIMARY KEY,doctor_name varchar(89),doctor_specialist varchar(89));
+CREATE TABLE appoinment(appoinment_id int PRIMARY KEY,doctorid int,appointment date,patientid int UNIQUE,CONSTRAINT conf FOREIGN KEY(doctorid) REFERENCES doctor(doctor_id)); 
+
+
+//value insert in patient
+
+INSERT INTO patient(patientid,patientname,patientcontact,resons)VALUES(1,'vini',984937857,'headache');
+INSERT INTO patient(patientid,patientname,patientcontact,resons)VALUES(1,'vini',873874837,'smokepain');
+
+// value insert in medical
+INSERT INTO medicalrecord(medition_id ,typeofmedition,statusofhealthcondition,patientid)VALUES(12,'paracitamal','normal',1);
+//value to doctor
+INSERT INTO doctor(doctor_id,doctor_name,doctor_specialist)VALUES(1,'ravi','neurologist');
+INSERT INTO doctor(doctor_id,doctor_name,doctor_specialist)VALUES(6,'sham','ophthalmologist');
+
+//value in appoinment
+INSERT INTO appoinment(appoinment_id,doctorid,appointment,patientid)VALUES(101,1,'2021-03-21',1);
+
+//display all record
+
+select* from patient p leftjoin medicalrecord m on p.patientid=m.pationedid leftjoin appointment a on p.patientid=a.patientid leftjoin doctor d on p.patientid=d.doctor_id
+
+select p.patientname,d.doctorname from patient p inner join medicalrecord m on p.patientid=m.patientid inner oin doctor d=p.patientid=d.doctor inner join appointment a on p.patientid=a.patientid
